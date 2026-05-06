@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Music Maker 🎵</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/beatpad.css">
+  <link rel="stylesheet" href="css/piano.css">
+  <link rel="stylesheet" href="css/modal.css">
+</head>
+<body>
+
+  <header class="app-header">
+    <div class="header-inner">
+      <h1 class="app-title">🎵 Music Maker</h1>
+      <p class="app-tagline">Make your own music!</p>
+    </div>
+  </header>
+
+  <main class="app-layout">
+
+    <!-- ── CONTROLS SIDEBAR ─────────────────────────────────────── -->
+    <aside class="card" id="controls-section">
+
+      <div class="section-header">
+        <h2>Controls</h2>
+      </div>
+
+      <!-- Transport -->
+      <div class="control-group">
+        <div class="control-label">
+          <span>Play Your Beat</span>
+          <button class="info-btn" data-modal="transport" aria-label="What is this?">?</button>
+        </div>
+        <div class="transport-buttons">
+          <button id="play-btn"  class="btn btn-play">▶ Play</button>
+          <button id="stop-btn"  class="btn btn-stop">⏹ Stop</button>
+          <button id="clear-btn" class="btn btn-clear">🗑 Clear</button>
+        </div>
+      </div>
+
+      <!-- BPM -->
+      <div class="control-group">
+        <div class="control-label">
+          <label for="bpm-slider">Speed: <strong id="bpm-display">120</strong> BPM</label>
+          <button class="info-btn" data-modal="bpm" aria-label="What is BPM?">?</button>
+        </div>
+        <input type="range" id="bpm-slider" min="60" max="180" value="120" step="1">
+        <div class="range-labels"><span>Slow 🐢</span><span>Fast 🐇</span></div>
+      </div>
+
+      <!-- Volume -->
+      <div class="control-group">
+        <div class="control-label">
+          <label for="volume-slider">🔊 Volume</label>
+          <button class="info-btn" data-modal="volume" aria-label="What is volume?">?</button>
+        </div>
+        <input type="range" id="volume-slider" min="-40" max="0" value="-10" step="1">
+        <div class="range-labels"><span>Quiet</span><span>Loud</span></div>
+      </div>
+
+      <!-- Preset loader -->
+      <div class="control-group">
+        <div class="control-label">
+          <span>Beat Presets</span>
+          <button class="info-btn" data-modal="presets" aria-label="What are presets?">?</button>
+        </div>
+        <select id="preset-select">
+          <option value="">-- Pick a preset --</option>
+          <option value="basic-beat">Basic Beat</option>
+          <option value="reggae">Reggae</option>
+          <option value="dance">Dance</option>
+        </select>
+        <div class="preset-buttons">
+          <button id="load-preset-btn" class="btn btn-secondary">Load Preset</button>
+        </div>
+        <div class="save-buttons">
+          <button id="save-beat-btn"  class="btn btn-secondary">💾 Save My Beat</button>
+          <button id="load-beat-btn"  class="btn btn-secondary">📂 Load My Beat</button>
+        </div>
+      </div>
+
+    </aside>
+
+    <!-- ── BEAT MACHINE ──────────────────────────────────────────── -->
+    <section class="card" id="beat-section">
+
+      <div class="section-header">
+        <h2>🥁 Beat Machine</h2>
+        <button class="info-btn" data-modal="beat" aria-label="What is the beat machine?">?</button>
+      </div>
+
+      <div id="sequencer-scroll">
+        <div id="sequencer-grid">
+
+          <div class="drum-row" data-drum="kick" data-row="0">
+            <div class="row-meta">
+              <button class="pad-label" data-drum="kick">Kick 💥</button>
+              <button class="info-btn" data-modal="kick" aria-label="What is a kick?">?</button>
+            </div>
+            <div class="steps" data-row="0"></div>
+          </div>
+
+          <div class="drum-row" data-drum="snare" data-row="1">
+            <div class="row-meta">
+              <button class="pad-label" data-drum="snare">Snare 🥁</button>
+              <button class="info-btn" data-modal="snare" aria-label="What is a snare?">?</button>
+            </div>
+            <div class="steps" data-row="1"></div>
+          </div>
+
+          <div class="drum-row" data-drum="hihat" data-row="2">
+            <div class="row-meta">
+              <button class="pad-label" data-drum="hihat">Hi-Hat ✨</button>
+              <button class="info-btn" data-modal="hihat" aria-label="What is a hi-hat?">?</button>
+            </div>
+            <div class="steps" data-row="2"></div>
+          </div>
+
+          <div class="drum-row" data-drum="clap" data-row="3">
+            <div class="row-meta">
+              <button class="pad-label" data-drum="clap">Clap 👏</button>
+              <button class="info-btn" data-modal="clap" aria-label="What is a clap?">?</button>
+            </div>
+            <div class="steps" data-row="3"></div>
+          </div>
+
+          <div class="drum-row" data-drum="cowbell" data-row="4">
+            <div class="row-meta">
+              <button class="pad-label" data-drum="cowbell">Cowbell 🔔</button>
+              <button class="info-btn" data-modal="cowbell" aria-label="What is a cowbell?">?</button>
+            </div>
+            <div class="steps" data-row="4"></div>
+          </div>
+
+          <div class="drum-row" data-drum="tom" data-row="5">
+            <div class="row-meta">
+              <button class="pad-label" data-drum="tom">Tom 🎵</button>
+              <button class="info-btn" data-modal="tom" aria-label="What is a tom?">?</button>
+            </div>
+            <div class="steps" data-row="5"></div>
+          </div>
+
+        </div><!-- #sequencer-grid -->
+      </div><!-- #sequencer-scroll -->
+
+    </section>
+
+    <!-- ── PIANO + RECORDER ─────────────────────────────────────── -->
+    <section class="card" id="piano-section">
+
+      <div class="section-header">
+        <h2>🎹 Piano</h2>
+        <button class="info-btn" data-modal="piano" aria-label="What is the piano?">?</button>
+      </div>
+
+      <!-- Instrument picker -->
+      <div id="instrument-picker">
+        <div class="control-label">
+          <span>Sound:</span>
+          <button class="info-btn" data-modal="instrument" aria-label="What is the instrument picker?">?</button>
+        </div>
+        <div class="instrument-buttons">
+          <button class="instrument-btn selected" data-instrument="piano">🎹 Piano</button>
+          <button class="instrument-btn" data-instrument="bell">🔔 Bell</button>
+          <button class="instrument-btn" data-instrument="guitar">🎸 Guitar</button>
+          <button class="instrument-btn" data-instrument="synth">🌊 Synth</button>
+        </div>
+      </div>
+
+      <!-- Keyboard -->
+      <div id="piano-container">
+        <div id="piano-keys"></div>
+      </div>
+
+      <!-- Melody recorder -->
+      <div id="recorder-section">
+        <div class="control-label">
+          <span>Melody Recorder</span>
+          <button class="info-btn" data-modal="recorder" aria-label="What is the melody recorder?">?</button>
+        </div>
+        <div id="recorder-status" class="recorder-status">Ready to record 🎤</div>
+        <div class="recorder-buttons">
+          <button id="record-btn"       class="btn btn-record">🔴 Record</button>
+          <button id="stop-record-btn"  class="btn btn-secondary" disabled>⏹ Stop</button>
+          <button id="play-loop-btn"    class="btn btn-secondary" disabled>▶ Loop</button>
+          <button id="stop-loop-btn"    class="btn btn-secondary" disabled>⏹ Stop Loop</button>
+          <button id="clear-record-btn" class="btn btn-secondary" disabled>🗑 Clear</button>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ── FUN SOUND PADS ────────────────────────────────────────── -->
+    <section class="card" id="pads-section">
+
+      <div class="section-header">
+        <h2>🎉 Fun Pads</h2>
+        <button class="info-btn" data-modal="pads" aria-label="What are the fun pads?">?</button>
+      </div>
+
+      <div id="sound-pads">
+        <button class="sound-pad" data-sound="cowbell"  style="--pad-color:#C77DFF">🔔 Cowbell</button>
+        <button class="sound-pad" data-sound="airhorn"  style="--pad-color:#FF6B6B">📯 Airhorn</button>
+        <button class="sound-pad" data-sound="boing"    style="--pad-color:#FFD93D">🟡 Boing</button>
+        <button class="sound-pad" data-sound="whistle"  style="--pad-color:#6BCB77">🎵 Whistle</button>
+        <button class="sound-pad" data-sound="zap"      style="--pad-color:#4D96FF">⚡ Zap</button>
+        <button class="sound-pad" data-sound="clappad"  style="--pad-color:#FF9A3C">👏 Clap</button>
+        <button class="sound-pad" data-sound="woosh"    style="--pad-color:#FF6B9D">💨 Woosh</button>
+        <button class="sound-pad" data-sound="bellpad"  style="--pad-color:#A0E4FF">🔔 Bell</button>
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- ── INFO MODAL ────────────────────────────────────────────── -->
+  <div id="info-modal" class="modal-overlay" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div class="modal-card">
+      <button class="modal-close" aria-label="Close">✕</button>
+      <div id="modal-icon"  class="modal-icon"></div>
+      <h2 id="modal-title"  class="modal-title"></h2>
+      <p  id="modal-text"   class="modal-text"></p>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.js"></script>
+  <script src="js/audio.js"></script>
+  <script src="js/sequencer.js"></script>
+  <script src="js/piano.js"></script>
+  <script src="js/recorder.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/modal.js"></script>
+
+</body>
+</html>

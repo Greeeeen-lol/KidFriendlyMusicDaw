@@ -1,0 +1,81 @@
+/* ── Piano scroll container ──────────────────────────────── */
+#piano-container {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 8px 0 12px;
+  margin-bottom: 0.5rem;
+  /* subtle inset shadow to hint scroll */
+  box-shadow: inset -8px 0 12px rgba(0,0,0,0.3);
+  border-radius: 0 0 8px 8px;
+}
+
+/* ── Keys wrapper (sized by JS) ──────────────────────────── */
+#piano-keys {
+  position: relative;
+  height: 130px;
+  /* width is set dynamically by piano.js */
+  user-select: none;
+}
+
+/* ── Shared key styles ───────────────────────────────────── */
+.piano-key {
+  position: absolute;
+  border: none;
+  border-radius: 0 0 6px 6px;
+  cursor: pointer;
+  touch-action: none;
+  transition: background 0.06s, transform 0.06s;
+  outline: none;
+}
+
+/* ── White keys ──────────────────────────────────────────── */
+.white-key {
+  width: 42px;
+  height: 128px;
+  top: 0;
+  background: #f5f0ff;
+  border: 1.5px solid #9e9e9e;
+  z-index: 1;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding-bottom: 6px;
+  font-family: var(--font-body);
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: #9c6dff;
+}
+
+.white-key:hover:not(.pressed) { background: #ede0ff; }
+
+.white-key.pressed {
+  background: #c9a0ff;
+  transform: scaleY(0.97);
+  transform-origin: top center;
+}
+
+/* ── Black keys ──────────────────────────────────────────── */
+.black-key {
+  width: 28px;
+  height: 80px;
+  top: 0;
+  background: #1a0a2e;
+  z-index: 2;
+  border-radius: 0 0 5px 5px;
+  border: 1.5px solid #0a0015;
+  border-top: none;
+}
+
+.black-key:hover:not(.pressed) { background: #2d1a50; }
+
+.black-key.pressed {
+  background: #7c4dff;
+  box-shadow: 0 0 10px rgba(124,77,255,0.8);
+}
+
+/* ── Mobile: slightly smaller keys ──────────────────────── */
+@media (max-width: 480px) {
+  #piano-keys  { height: 100px; }
+  .white-key   { width: 36px; height: 98px; font-size: 0.6rem; }
+  .black-key   { width: 24px; height: 62px; }
+}

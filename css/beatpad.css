@@ -1,0 +1,106 @@
+/* ── Sequencer scroll wrapper ────────────────────────────── */
+#sequencer-scroll {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: 4px;
+}
+
+/* ── Sequencer grid ──────────────────────────────────────── */
+#sequencer-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 580px; /* ensures 16 steps always visible; scroll on mobile */
+}
+
+/* ── Drum row ────────────────────────────────────────────── */
+.drum-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.row-meta {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-shrink: 0;
+  width: 110px;
+}
+
+/* ── Pad label (tap-to-preview button) ───────────────────── */
+.pad-label {
+  flex: 1;
+  min-height: 38px;
+  padding: 0 8px;
+  border: none;
+  border-radius: 8px;
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 0.8rem;
+  color: #fff;
+  cursor: pointer;
+  text-align: left;
+  transition: transform 0.08s, filter 0.08s;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.pad-label:active { transform: scale(0.94); filter: brightness(0.85); }
+
+/* Per-row colours */
+[data-drum="kick"]    .pad-label { background: var(--color-kick); }
+[data-drum="snare"]   .pad-label { background: var(--color-snare); color: #1a1a2e; }
+[data-drum="hihat"]   .pad-label { background: var(--color-hihat); color: #1a1a2e; }
+[data-drum="clap"]    .pad-label { background: var(--color-clap); }
+[data-drum="cowbell"] .pad-label { background: var(--color-cowbell); }
+[data-drum="tom"]     .pad-label { background: var(--color-tom); color: #1a1a2e; }
+
+/* ── Steps container ─────────────────────────────────────── */
+.steps {
+  display: flex;
+  gap: 3px;
+  flex: 1;
+}
+
+/* Beat-group separator: slightly larger gap every 4 steps */
+.step:nth-child(4n + 1):not(:first-child) { margin-left: 7px; }
+
+/* ── Step button ─────────────────────────────────────────── */
+.step {
+  flex-shrink: 0;
+  width: 34px;
+  height: 34px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.06s, filter 0.06s, background 0.1s;
+  touch-action: manipulation;
+  user-select: none;
+}
+
+/* Default (off) state */
+[data-drum="kick"]    .step { background: rgba(255,107,107,0.18); }
+[data-drum="snare"]   .step { background: rgba(255,217,61,0.18); }
+[data-drum="hihat"]   .step { background: rgba(107,203,119,0.18); }
+[data-drum="clap"]    .step { background: rgba(77,150,255,0.18); }
+[data-drum="cowbell"] .step { background: rgba(199,125,255,0.18); }
+[data-drum="tom"]     .step { background: rgba(255,154,60,0.18); }
+
+/* Active (on) state */
+[data-drum="kick"]    .step.active { background: var(--color-kick); box-shadow: 0 0 10px rgba(255,107,107,0.6); }
+[data-drum="snare"]   .step.active { background: var(--color-snare); box-shadow: 0 0 10px rgba(255,217,61,0.6); }
+[data-drum="hihat"]   .step.active { background: var(--color-hihat); box-shadow: 0 0 10px rgba(107,203,119,0.6); }
+[data-drum="clap"]    .step.active { background: var(--color-clap); box-shadow: 0 0 10px rgba(77,150,255,0.6); }
+[data-drum="cowbell"] .step.active { background: var(--color-cowbell); box-shadow: 0 0 10px rgba(199,125,255,0.6); }
+[data-drum="tom"]     .step.active { background: var(--color-tom); box-shadow: 0 0 10px rgba(255,154,60,0.6); }
+
+/* Playing (playhead) state — bright flash on top of active or inactive */
+.step.playing {
+  filter: brightness(1.9);
+  transform: scale(1.12);
+  box-shadow: 0 0 14px rgba(255,255,255,0.5) !important;
+}
+
+.step:hover:not(.playing) { filter: brightness(1.4); }
+.step:active { transform: scale(0.90); }
